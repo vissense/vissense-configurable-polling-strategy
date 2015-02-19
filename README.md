@@ -6,21 +6,24 @@
 VisSense.js: Configurable Polling Strategy
 ====
 
-A configurable polling strategy for [VisSense.js](https://github.com/vissense/vissense-configurable-polling-strategy).
+A configurable polling strategy for [VisSense.js](https://github.com/vissense/vissense-configurable-polling-strategy) 
+(uses [Again.js](https://github.com/theborakompanioni/againjs)).
+
+This plugin aims to provide a more advanced polling strategy than the base library.
 
 Examples
 ===
 
-Invoke a callback if an element has been visible at least 50% for 1 second:
+Update a monitor on provided intervals depending on the current state.
 ```javascript
-var element = $('#myElement'); 
-var visibility = VisSense(element[0]);
+var element = $('#myElement')[0]; 
+var visibility = VisSense(element);
 
 var monitor = visibility.monitor({
   strategy: new VisSense.VisMon.Strategy.ConfigurablePollingStrategy({
     hidden: 9001,
     visible: 1042, // every 10 milliseconds
-    fullyvisible: 1042
+    fullyvisible: 666
   }),
   update: function () {
     observer.callback();

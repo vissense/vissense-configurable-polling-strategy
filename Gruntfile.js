@@ -49,7 +49,7 @@ module.exports = function (grunt) {
         options: {
           src: '<%= concat.tmp.dest %>',
           dest: '<%= concat.tmp.dest %>',
-          template: './templates/browser-vissense-againjs-polling-strategy.hbs',
+          template: './templates/browser-vissense-configurable-polling-strategy.hbs',
           indent: 2
         }
       }

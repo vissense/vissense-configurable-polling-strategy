@@ -16,7 +16,7 @@ module.exports = function(config) {
 
             'bower_components/vissense/dist/vissense.min.js',
 
-            'dist/vissense-againjs-polling-strategy.js',
+            'dist/vissense-configurable-polling-strategy.js',
 
             'spec/**/*.js',
             // fixtures

@@ -1,7 +1,7 @@
 {
-  "name": "vissense-againjs-polling-strategy",
+  "name": "vissense-configurable-polling-strategy",
   "version": "0.0.1",
-  "title": "vissense-againjs-polling-strategyjs",
+  "title": "vissense-configurable-polling-strategyjs",
   "author": {
     "name": "tbk"
   },
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/vissense/vissense-againjs-polling-strategy"
+    "url": "https://github.com/vissense/vissense-configurable-polling-strategy"
   },
   "dependencies": {},
   "devDependencies": {

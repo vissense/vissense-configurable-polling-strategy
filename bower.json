@@ -1,17 +1,17 @@
 {
-  "name": "vissense-againjs-polling-strategy",
+  "name": "vissense-configurable-polling-strategy",
   "version": "0.0.1",
   "license": "MIT",
-  "main": "dist/vissense.againjs-polling-strategy.min.js",
+  "main": "dist/vissense-configurable-polling-strategy.min.js",
   "description": "",
   "keywords": [],
-  "homepage": "https://www.github.com/vissense/vissense-againjs-polling-strategy",
+  "homepage": "https://www.github.com/vissense/vissense-configurable-polling-strategy",
   "authors": [
     "tbk"
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/vissense/vissense-againjs-polling-strategy.git"
+    "url": "git://github.com/vissense/vissense-configurable-polling-strategy.git"
   },
   "ignore": [
     "spec",

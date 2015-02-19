@@ -1,4 +1,4 @@
-/*! { "name": "vissense-againjs-polling-strategy", "version": "0.0.1", "copyright": "(c) 2015 tbk" } */
+/*! { "name": "vissense-configurable-polling-strategy", "version": "0.0.1", "copyright": "(c) 2015 tbk" } */
 ;(function (root, factory) {
   'use strict';
   var vissense = root.VisSense;
