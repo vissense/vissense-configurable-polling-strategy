@@ -8,13 +8,38 @@
 describe('VisSensePluginAgainJsPollingStrategy', function () {
   'use strict';
 
+  function fireScrollEvent() {
+    var event = document.createEvent('Event');
+    event.initEvent('scroll', true, true);
+    window.dispatchEvent(event);
+  }
+
+  function showHide(element, config) {
+    if(!config.show) {
+      throw new Error('missing config.show');
+    } else if(!config.hide) {
+      throw new Error('missing config.hide');
+    }
+
+    setTimeout(function () {
+      element.style.display = 'block';
+      fireScrollEvent();
+    }, config.show);
+
+    setTimeout(function () {
+      element.style.display = 'none';
+      fireScrollEvent();
+    }, config.hide);
+  }
 
   describe('Tests', function () {
-    var visobj, observer;
+    var element, visobj, observer;
 
     beforeEach(function () {
       jasmine.getFixtures().set('<div id="element" style="width: 1px; height: 1px;"></div>');
-      visobj = new VisSense($('#element')[0]);
+
+      element = $('#element')[0];
+      visobj = new VisSense(element);
 
       observer = {callback: VisSense.Utils.noop};
       spyOn(observer, 'callback');
@@ -34,6 +59,20 @@ describe('VisSensePluginAgainJsPollingStrategy', function () {
       expect(strategy).toBeDefined();
     });
 
+    it('should not be possible to start the Strategy multiple times', function () {
+      var monitor = visobj.monitor({
+        strategy: []
+      });
+
+      var strategy = new VisSense.VisMon.Strategy.AgainJsPollingStrategy();
+
+      expect(strategy.start(monitor)).toBe(true);
+      expect(strategy.start(monitor)).toBe(true);
+      expect(strategy.start(monitor)).toBe(true);
+      expect(strategy.stop(monitor)).toBe(true);
+      expect(strategy.stop(monitor)).toBe(false);
+    });
+
     it('should create a monitor with an AgainJsPollingStrategy', function () {
       var monitor = visobj.monitor({
         strategy: new VisSense.VisMon.Strategy.AgainJsPollingStrategy(),
@@ -48,10 +87,7 @@ describe('VisSensePluginAgainJsPollingStrategy', function () {
 
       expect(observer.callback.calls.count()).toEqual(1);
 
-      jasmine.clock().tick(999);
-      expect(observer.callback.calls.count()).toEqual(1);
-
-      jasmine.clock().tick(999);
+      jasmine.clock().tick(1000);
       expect(observer.callback.calls.count()).toEqual(2);
 
       monitor.stop();
@@ -63,10 +99,9 @@ describe('VisSensePluginAgainJsPollingStrategy', function () {
 
     });
 
-    it('should create a monitor with an AgainJsPollingStrategy that updates less frequently when visible', function () {
+    it('should create a monitor with an AgainJsPollingStrategy that updates more frequently when visible', function () {
       var monitor = visobj.monitor({
         strategy: new VisSense.VisMon.Strategy.AgainJsPollingStrategy({
-          visible: 10, // every 10 milliseconds
           fullyvisible: 10
         }),
         update: function () {
@@ -81,6 +116,7 @@ describe('VisSensePluginAgainJsPollingStrategy', function () {
       expect(observer.callback.calls.count()).toEqual(1);
 
       jasmine.clock().tick(999);
+
       expect(observer.callback.calls.count()).toEqual(100);
 
       monitor.stop();
@@ -88,29 +124,53 @@ describe('VisSensePluginAgainJsPollingStrategy', function () {
       jasmine.clock().tick(999);
       jasmine.clock().tick(9999);
       jasmine.clock().tick(99999);
+
       expect(observer.callback.calls.count()).toEqual(100);
+
+    });
+
+    it('should verify switching modes when elements visibility changes', function () {
+      var monitor = visobj.monitor({
+        strategy: new VisSense.VisMon.Strategy.AgainJsPollingStrategy({
+          fullyvisible: 1000,
+          hidden: 10000
+        }),
+        update: function () {
+          observer.callback();
+        }
+      });
+
+      expect(observer.callback).not.toHaveBeenCalled();
+
+      monitor.start();
+
+      expect(observer.callback.calls.count()).toEqual(1);
+
+      jasmine.clock().tick(1000);
+
+      expect(observer.callback.calls.count()).toEqual(2);
+
+      showHide(element, {
+        hide: 1, // hide immediately
+        show: 20001
+      });
+      jasmine.clock().tick(20002);
+
+      expect(observer.callback.calls.count()).toEqual(4);
+
+      monitor.stop();
+
+      jasmine.clock().tick(999);
+      jasmine.clock().tick(9999);
+      jasmine.clock().tick(99999);
+
+      expect(observer.callback.calls.count()).toEqual(4);
 
     });
 
   });
       /*
-      function fireScrollEvent() {
-        var event = document.createEvent('Event');
-        event.initEvent('scroll', true, true);
-        window.dispatchEvent(event);
-      }
 
-      function showHide(element, show, hide) {
-        setTimeout(function () {
-          element.style.display = 'block';
-          fireScrollEvent();
-        }, show);
-
-        setTimeout(function () {
-          element.style.display = 'none';
-          fireScrollEvent();
-        }, hide);
-      }
 
       function jumpToFixedPositionAndBack(element, leftInPixel, show, hide) {
         var formPosition = element.style.position;
