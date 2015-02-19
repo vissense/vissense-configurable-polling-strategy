@@ -1,0 +1,39 @@
+{
+  "name": "vissense-againjs-polling-strategy",
+  "version": "0.0.1",
+  "license": "MIT",
+  "main": "dist/vissense.againjs-polling-strategy.min.js",
+  "description": "",
+  "keywords": [],
+  "homepage": "https://www.github.com/vissense/vissense-againjs-polling-strategy",
+  "authors": [
+    "tbk"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/vissense/vissense-againjs-polling-strategy.git"
+  },
+  "ignore": [
+    "spec",
+    "bower_components",
+    "node_modules",
+    "Gruntfile.js",
+    "karma.conf.js",
+    "SpecRunner.html",
+    "package.json",
+    "bower.json",
+    "src/test",
+    "dist/coverage",
+    "**/.*"
+  ],
+  "devDependencies": {
+    "jasmine": "2.1.3",
+    "lodash": "2.4.1",
+    "jquery": "2.1.1",
+    "jasmine-jquery": "velesin/jasmine-jquery#2.0.6"
+  },
+  "dependencies": {
+    "vissense": "vissense/vissense#0.3.0",
+    "againjs": "~0.1.0"
+  }
+}
