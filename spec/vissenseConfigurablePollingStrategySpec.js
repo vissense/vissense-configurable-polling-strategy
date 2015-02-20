@@ -5,8 +5,13 @@
  * Copyright 2014 tbk <theborakompanioni+vissense@gmail.com>
  * Available under MIT license <http://opensource.org/licenses/MIT>
  */
-describe('VisSensePluginAgainJsPollingStrategy', function () {
+describe('VisSensePluginConfigurablePollingStrategy', function () {
   'use strict';
+  var assertThat = function(expression, message) {
+    if(!expression) {
+      throw new Error(message);
+    }
+  };
 
   function fireScrollEvent() {
     var event = document.createEvent('Event');
@@ -15,11 +20,8 @@ describe('VisSensePluginAgainJsPollingStrategy', function () {
   }
 
   function showHide(element, config) {
-    if(!config.show) {
-      throw new Error('missing config.show');
-    } else if(!config.hide) {
-      throw new Error('missing config.hide');
-    }
+    assertThat(config.show > 0, 'missing config.show');
+    assertThat(config.hide > 0, 'missing config.hide');
 
     setTimeout(function () {
       element.style.display = 'block';
@@ -53,8 +55,8 @@ describe('VisSensePluginAgainJsPollingStrategy', function () {
       jasmine.clock().uninstall();
     });
 
-    it('should create a AgainJsPollingStrategy', function () {
-      var strategy = new VisSense.VisMon.Strategy.AgainJsPollingStrategy();
+    it('should create a ConfigurablePollingStrategy', function () {
+      var strategy = new VisSense.VisMon.Strategy.ConfigurablePollingStrategy();
 
       expect(strategy).toBeDefined();
     });
@@ -64,7 +66,7 @@ describe('VisSensePluginAgainJsPollingStrategy', function () {
         strategy: []
       });
 
-      var strategy = new VisSense.VisMon.Strategy.AgainJsPollingStrategy();
+      var strategy = new VisSense.VisMon.Strategy.ConfigurablePollingStrategy();
 
       expect(strategy.start(monitor)).toBe(true);
       expect(strategy.start(monitor)).toBe(true);
@@ -73,9 +75,9 @@ describe('VisSensePluginAgainJsPollingStrategy', function () {
       expect(strategy.stop(monitor)).toBe(false);
     });
 
-    it('should create a monitor with an AgainJsPollingStrategy', function () {
+    it('should create a monitor with an ConfigurablePollingStrategy', function () {
       var monitor = visobj.monitor({
-        strategy: new VisSense.VisMon.Strategy.AgainJsPollingStrategy(),
+        strategy: new VisSense.VisMon.Strategy.ConfigurablePollingStrategy(),
         update: function () {
           observer.callback();
         }
@@ -99,9 +101,9 @@ describe('VisSensePluginAgainJsPollingStrategy', function () {
 
     });
 
-    it('should create a monitor with an AgainJsPollingStrategy that updates more frequently when visible', function () {
+    it('should create a monitor with an ConfigurablePollingStrategy that updates more frequently when visible', function () {
       var monitor = visobj.monitor({
-        strategy: new VisSense.VisMon.Strategy.AgainJsPollingStrategy({
+        strategy: new VisSense.VisMon.Strategy.ConfigurablePollingStrategy({
           fullyvisible: 10
         }),
         update: function () {
@@ -131,7 +133,7 @@ describe('VisSensePluginAgainJsPollingStrategy', function () {
 
     it('should verify switching modes when elements visibility changes', function () {
       var monitor = visobj.monitor({
-        strategy: new VisSense.VisMon.Strategy.AgainJsPollingStrategy({
+        strategy: new VisSense.VisMon.Strategy.ConfigurablePollingStrategy({
           fullyvisible: 1000,
           hidden: 10000
         }),

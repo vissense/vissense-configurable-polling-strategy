@@ -15,11 +15,11 @@
 
 /**
  * @class
- * @name AgainJsPollingStrategy
+ * @name ConfigurablePollingStrategy
  * @extends VisSense.VisMon.Strategy
  * @memberof VisSense.VisMon.Strategy
  *
- * @param {VisSense.VisMon.Strategy.AgainJsPollingStrategy#AgainJsPollingStrategyConfig} [config={}] The config object
+ * @param {VisSense.VisMon.Strategy.ConfigurablePollingStrategy#ConfigurablePollingStrategyConfig} [config={}] The config object
  *
  * @classdesc A strategy that will periodically update the objects
  * visibility state. Configurable!
@@ -27,7 +27,7 @@
  * @example
  *
  * var visMon = VisSense(...).monitor({
- *   strategy: new VisSense.VisMon.Strategy.AgainJsPollingStrategy({
+ *   strategy: new VisSense.VisMon.Strategy.ConfigurablePollingStrategy({
  *     hidden: 5000
  *     visible: 3000,
  *     fullyvisible: 1000
@@ -38,7 +38,7 @@
  * }).start();
  *
  */
-Strategy.AgainJsPollingStrategy = function (config) {
+Strategy.ConfigurablePollingStrategy = function (config) {
   var _config = VisSenseUtils.defaults(config, {
     fullyvisible: 1000,
     visible: 1000,
@@ -50,16 +50,16 @@ Strategy.AgainJsPollingStrategy = function (config) {
     var againjs = Again.create();
 
     var stopUpdate = monitor.on('visibilitychange', function (monitor) {
-      console.log('[AgainJsPollingStrategy] update againjs timer with ' + monitor.state().state);
+      console.log('[ConfigurablePollingStrategy] update againjs timer with ' + monitor.state().state);
       againjs.update(monitor.state().state);
     });
 
     var stopAgainJs = againjs.every(function () {
-      console.log('[AgainJsPollingStrategy] update monitor by AgainJs ' + monitor.state().state);
+      console.log('[ConfigurablePollingStrategy] update monitor by AgainJs ' + monitor.state().state);
       monitor.update();
     }, _config);
 
-    console.log('[AgainJsPollingStrategy] starting againjs timer with "' + monitor.state().state + '"');
+    console.log('[ConfigurablePollingStrategy] starting againjs timer with "' + monitor.state().state + '"');
     againjs.update(monitor.state().state);
 
     return function () {
@@ -71,7 +71,7 @@ Strategy.AgainJsPollingStrategy = function (config) {
 
   this._started = false;
 };
-Strategy.AgainJsPollingStrategy.prototype = Object.create(
+Strategy.ConfigurablePollingStrategy.prototype = Object.create(
   Strategy.prototype
 );
 /**
@@ -80,9 +80,9 @@ Strategy.AgainJsPollingStrategy.prototype = Object.create(
  *
  * @param {VisSense.VisMon} monitor
  *
- * @memberof VisSense.VisMon.Strategy.AgainJsPollingStrategy#
+ * @memberof VisSense.VisMon.Strategy.ConfigurablePollingStrategy#
  */
-Strategy.AgainJsPollingStrategy.prototype.start = function (monitor) {
+Strategy.ConfigurablePollingStrategy.prototype.start = function (monitor) {
   if (!this._started) {
     this._stopInternal = this._startInternal(monitor);
     this._started = true;
@@ -95,9 +95,9 @@ Strategy.AgainJsPollingStrategy.prototype.start = function (monitor) {
  *
  * @param {VisSense.VisMon} monitor
  *
- * @memberof VisSense.VisMon.Strategy.AgainJsPollingStrategy#
+ * @memberof VisSense.VisMon.Strategy.ConfigurablePollingStrategy#
  */
-Strategy.AgainJsPollingStrategy.prototype.stop = function () {
+Strategy.ConfigurablePollingStrategy.prototype.stop = function () {
   if (!this._started) {
     return false;
   }
