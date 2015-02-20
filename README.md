@@ -1,4 +1,5 @@
 [![Build Status](https://api.travis-ci.org/vissense/vissense-configurable-polling-strategy.png?branch=master)](https://travis-ci.org/vissense/vissense-configurable-polling-strategy)
+[![Coverage Status](https://coveralls.io/repos/vissense/vissense-configurable-polling-strategy/badge.svg)](https://coveralls.io/r/vissense/vissense-configurable-polling-strategy)
 [![Dependency Status](https://david-dm.org/vissense/vissense-configurable-polling-strategy.svg)](https://david-dm.org/vissense/vissense-configurable-polling-strategy)
 [![devDependency Status](https://david-dm.org/vissense/vissense-configurable-polling-strategy/dev-status.svg)](https://david-dm.org/vissense/vissense-configurable-polling-strategy#info=devDependencies)
 
